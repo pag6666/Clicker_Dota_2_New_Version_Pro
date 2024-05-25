@@ -1,11 +1,12 @@
 #include "lib/source/include/include.h"
 #include "lib/source/include/fun.h"
 #include "lib/source/include/ItemBot.h"
-const int buy_max_item = 5;
+const int buy_max_item = 6;
 std::vector<Bot> bots;
 std::vector<HWND> windows;
 void StartAllThread() 
 {
+	
 	std::thread* t1 = new std::thread(ThreadKeyBoard);
 	std::thread* t2 = new std::thread(ThreadTime);
 }
@@ -57,27 +58,35 @@ PointF(388,317), PointF(359,293)
 };
 /////////////////////////////////////////////////////////////
 //7
-std::string boots[] = { "BOOTS OF SPEED","PHASE BOOTS","ARCANE BOOTS", "AGHANIM SHARD","OBSER WARD","BLADE MAIL","TRANQUIL BOOTS","BOOTS OF TRAVEL","HELM OF THE" };
-std::string maska[] = { "WRAITH", "VLADMIR" ,"DRUM OF ENDURANCE", "BLADE MAIL" ,"OBSER WARD" ,"SENTRY WARD","HELM OF IRON" ,"MASK OF MADNESS" };
+//std::string items0[] = { "BOOTS OF SPEED","PHASE BOOTS","ARCANE BOOTS", "AGHANIM SHARD","OBSER WARD","BLADE MAIL","TRANQUIL BOOTS","BOOTS OF TRAVEL","HELM OF THE" };
+//std::string items1[] = { "WRAITH", "VLADMIR" ,"DRUM OF ENDURANCE", "BLADE MAIL" ,"OBSER WARD" ,"SENTRY WARD","HELM OF IRON" ,"MASK OF MADNESS" };
+////7
+////14
+//std::string items2[] = { "FALCON", "HEADDRESS","OBLI", "HAND","ARML","EUL","KAYA","FORCE" };
+////14
+////24
+//std::string items3[] = { "BRACER", "DAGON","SANGE","NULL TALISMAN","ORB OF CORROSION","PERSEVERANCE" };
+////24
+////35
+//std::string items4[] = { "HARPOON","CRYSTOLYS","ECHO SABLE","METEOR HAMMER","SHADOW BLADE","SKULL","WIT","DESLATOR","YASHAND KAYA" };
+////35
 //7
-//14
-std::string weapons[] = { "FALCON", "HEADDRESS","OBLI", "HAND","ARML","EUL","KAYA","FORCE" };
-//14
-//24
-std::string amulets[] = { "BRACER", "DAGON","SANGE","NULL TALISMAN","ORB OF CORROSION","PERSEVERANCE" };
-//24
-//35
-std::string power_item_skill[] = { "HARPOON","CRYSTOLYS","ECHO SABLE","METEOR HAMMER","SHADOW BLADE","SKULL","WIT","DESLATOR","YASHAND KAYA" };
-//35
+std::string items0[] = {"OBSERVER WARD","CLARITY","ENCHANTED MANGO","MAGIC WAND","RING OF BASILIUS"};
+std::string items1[] = {"SENTRY WARD", "NULL TALISMAN","SENTRY WARD","BOOTS OF SPEED", "WRAITH BAND","BRACER","HEADD RESS"};
+std::string items2[] = {"SOUL RING","ORB OF CORROSION","BOTTLE","UM OF SHADOWS","BOOTS OF SPEED" };
+std::string items3[] = {"FALCON BLADE","ARCANE BOOTS","PERSEVERANCE","AGHANIM SHARD","PAVISE","POWER TREADS","PHASE BOOTS","DRUM OF ENDURANCE","PHASE BOOTS"};
+std::string items4[] = {"OBLIVION STAFF","AGHANIM SHARD","VEIL OF DISCORD","MASK OF MADNESS","DRAGON LANCE"};
+std::string items5[] = {"CRYSTALYS","SANGE","YASHA","KAYA","BOOTS OF TRAVEL","HELM OF THE DOMINATOR","SKULL BASHER","SHADOW BLADE","DESOLATOR","KAYA AND SANGE","SANGE AND YASHA","YASHA AND KAYA"};
 void OneEterationBot(int index)
 {
+	
 	if (!IsDeBug()) {
-		std::cout << "dbg___________start________________" << std::endl;
+		std::cout << "dbg___________start_________index windwos = "<<index<<"_______" << std::endl;
 	}
 	//random buy item
 	if (bots[index].GetMyArrayTime(bots[index].GetMyIndexQueue()) == DeltaTime())
 	{
-		bots[index].SetShopItem("FALCON");
+		bots[index].SetShopItem(bots[index].GetNameItemOfIndex(bots[index].GetMyIndexQueue()));
 		if (bots[index].GetMyIndexQueue() < buy_max_item) {
 			bots[index].SetMyIndexQueue((bots[index].GetMyIndexQueue() + 1));
 		}
@@ -134,7 +143,39 @@ void OneEterationBot(int index)
 		}
 		
 	}
-	
+	if (TwoMinutsTimer() >= (60)*Random(0,3))
+	{
+		KeyDown(VK_CONTROL);
+		int random_up = Random(0, 4);
+		if (random_up == 0) {
+			InputKey('Q');
+		}
+		else if (random_up == 1) {
+			InputKey('W');
+		}
+		else if (random_up == 2) {
+			InputKey('E');
+		}
+		else if (random_up == 3)
+		{
+			InputKey('R');
+		}
+		KeyUp(VK_CONTROL);
+	}
+	if ((TwoMinutsTimer()/2) >= (30) * Random(0, 2))
+	{
+		int random = Random(0, 2);
+		if (random == 0) {
+			InputKey('Z');
+			InputKey('X');
+			InputKey('C');
+		}
+		else {
+			InputKey('V');
+			InputKey('B');
+			InputKey('N');
+		}
+	}
 	//press 9 dk or press 8 lt
 	if (bots[index].GetMySide() == SideBot::dark)
 	{
@@ -229,11 +270,12 @@ int main()
 		for (int i = 0; i < windows.size(); i++)
 		{		
 			int* randomBuyTime = new int [buy_max_item];
-			randomBuyTime[0] = (Random(3,60) * Random(1,6));
-			randomBuyTime[1] = (Random(10, 60) * Random(6, 9));
-			randomBuyTime[2] = (Random(20, 60) * Random(9, 14));
-			randomBuyTime[3] = (Random(30, 60) * Random(14, 20));
-			randomBuyTime[4] = (Random(40, 60) * Random(20, 24));
+			randomBuyTime[0] = (Random(1,50) * Random(1,5));
+			randomBuyTime[1] = (Random(20, 60) * Random(5, 11));
+			randomBuyTime[2] = (Random(40, 60) * Random(11, 16));
+			randomBuyTime[3] = (Random(50, 60) * Random(16, 25));
+			randomBuyTime[4] = (Random(45, 60) * Random(25, 29));
+			randomBuyTime[5] = (Random(50, 60) * Random(30, 36));
 			//std::string* nameItems = new std::string[buy_max_item];
 			////500
 			//nameItems[0] = "a";
@@ -241,48 +283,28 @@ int main()
 			//nameItems[2] = "c";
 			//nameItems[3] = "v";
 			//nameItems[4] = "g";
-			int random_item_boots = Random(0, 9);
-			int random_item_maska = Random(0, 8);
-			int random_item_weapon = Random(0, 8);
-			int random_item_amullet = Random(0, 5);
-			int random_item_power = Random(0, 9);
-			int set_index_b = random_item_boots;
-			int set_index_m = random_item_maska;
-			int set_index_w = random_item_weapon;
-			int set_index_a = random_item_amullet;
-			int set_index_p = random_item_power;
-			int size_item = 5;
-			std::string* iteam = new std::string[size_item]{ maska[set_index_m],boots[set_index_b],weapons[set_index_w],amulets[set_index_a],power_item_skill[set_index_p] };;
-			int random_select_save = Random(0, 6);
-			if (0 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ maska[set_index_m],boots[set_index_b],weapons[set_index_w],amulets[set_index_a],power_item_skill[set_index_p] };
-			}
-			else if (1 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ boots[set_index_b] ,maska[set_index_m],weapons[set_index_w],amulets[set_index_a],power_item_skill[set_index_p] };
-			}
-			else if (2 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ weapons[set_index_w] ,maska[set_index_m],boots[set_index_b],amulets[set_index_a],power_item_skill[set_index_p] };
-			}
-			else if (3 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ weapons[set_index_w] ,amulets[set_index_a],boots[set_index_b],maska[set_index_m],power_item_skill[set_index_p] };
-			}
-			else if (4 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ weapons[set_index_w] ,maska[set_index_m],amulets[set_index_a],boots[set_index_b],power_item_skill[set_index_p] };
-			}
-			else if (5 == random_select_save)
-			{
-				iteam = new std::string[size_item]{ maska[set_index_m] , weapons[set_index_w],boots[set_index_b],amulets[set_index_a],power_item_skill[set_index_p] };
-			}
-
-		
-
-			int sd = 0;
 			
+			int random_item_time0	=	Random(0, (sizeof(items0) / sizeof(std::string)));
+			int random_item_time1	=	Random(0, (sizeof(items1) / sizeof(std::string)));
+			int random_item_time2	=	Random(0, (sizeof(items2) / sizeof(std::string)));
+			int random_item_time3	=	Random(0, (sizeof(items3) / sizeof(std::string)));
+			int random_item_time4	=	Random(0, (sizeof(items4) / sizeof(std::string)));
+			int random_item_time5	=	Random(0, (sizeof(items5) / sizeof(std::string)));
+			int set_index_0 = random_item_time0;
+			int set_index_1 = random_item_time1;
+			int set_index_2 = random_item_time2;
+			int set_index_3 = random_item_time3;
+			int set_index_4 = random_item_time4;
+			int set_index_5 = random_item_time5;
+			std::string* iteam = new std::string[buy_max_item]{ 
+				items0[set_index_0],
+				items1[set_index_1],
+				items2[set_index_2],
+				items3[set_index_3],
+				items4[set_index_4],
+				items5[set_index_5]};
+				
+				
 				if (side == SideBot::dark) {
 					if (i < formulaSelectSide)
 					{
@@ -439,6 +461,7 @@ int main()
 	}
 	else 
 	{
+		
 		MessageBoxA(NULL,"бро где dota 2 ?","ошибка окна", MB_ICONWARNING);
 	}
 	std::cout << "Clicker closed" << std::endl;

@@ -234,7 +234,7 @@ void ThreadTime()
    
     while (!CloseWindows())
     {
-        if (twoMinutsTimer > (60 * 3)) 
+        if (twoMinutsTimer > (60 * 2)+15) 
         {
             twoMinutsTimer = 0;
         }
