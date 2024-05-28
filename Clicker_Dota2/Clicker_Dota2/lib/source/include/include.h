@@ -5,6 +5,7 @@
 #include <thread>
 #include <string>
 #include <vector>
+#include <Psapi.h>
 struct PointF
 {
 	

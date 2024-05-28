@@ -39,6 +39,11 @@ int TwoMinutsTimer()
 {
     return twoMinutsTimer;
 }
+int ninetime = 0;
+int nineMinutsTimer() 
+{
+    return ninetime;
+}
 int farmtime = 0;
 int FarmTime() 
 {
@@ -93,7 +98,22 @@ BOOL CALLBACK GetAllWindowsNameDota(HWND hwnd, LPARAM lParam)
     if (length == 0) return TRUE; 
     std::wstring windowTitle(length + 1, L'\0');
     GetWindowText(hwnd, &windowTitle[0], length + 1);
-    if (windowTitle.find(targetWindowTitle) != std::wstring::npos) {
+    wchar_t buffer[MAX_PATH];
+    DWORD pid = 0;
+    GetWindowThreadProcessId(hwnd, &pid);
+    HANDLE process = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+    DWORD size = (sizeof(buffer) / sizeof(wchar_t));
+    QueryFullProcessImageName(process, 0, buffer, &size);
+    std::wstring process_name = L"";
+    std::wstring fullPath = buffer;
+    size_t pos = fullPath.find_last_of(L"\\");
+    if (pos != std::wstring::npos) {
+        process_name = fullPath.substr(pos + 1);
+    }
+
+
+    if (((windowTitle.find(targetWindowTitle) != std::wstring::npos)  && (process_name == L"dota2.exe" || process_name == L"dota 2 emull.exe"))) {
+        std::wcout << L"windows index = /" << process_name<< "/ windwos name = " << windowTitle << std::endl;
         pWindows->push_back(hwnd);
     }
 
@@ -110,6 +130,7 @@ void MoveTargetPersonal(PointF point, HWND targetWindow)
     point.SetX(move_x);
     point.SetY(move_y);
     SetForegroundWindow(targetWindow);
+    
     Sleep(100);
     InputKey(Atack_Key);
     MouseOfclick(point, targetWindow);
@@ -134,7 +155,16 @@ void MouseOfclick(PointF point, HWND targetWindow)
 }
 int Random(int min, int max) 
 {
-    return  min + rand() % (max - min);
+    int result = 1;
+    int random = (max - min);
+    if (random == 0) {
+        result = 1;
+    }
+    else 
+    {
+        result = random;
+    }
+    return  min + rand() % result;
 }
 void KeyDown(WORD key) 
 {
@@ -231,21 +261,31 @@ int DeltaTime()
 }
 void ThreadTime() 
 {
-   
-    while (!CloseWindows())
+    if (!GetPause()) {
+        while (!CloseWindows())
+        {
+            if (twoMinutsTimer >= (60 * 2) + 15)
+            {
+                twoMinutsTimer = 0;
+            }
+            if (farmtime >= 30)
+            {
+                farmtime = 0;
+            }
+            if (ninetime >= (60 * 14))
+            {
+                ninetime = 0;
+            }
+            ninetime++;
+            farmtime++;
+            twoMinutsTimer++;
+            timercount++;
+            Sleep(1000);
+        }
+    }
+    else 
     {
-        if (twoMinutsTimer > (60 * 2)+15) 
-        {
-            twoMinutsTimer = 0;
-        }
-        if (farmtime > 18)
-        {
-            farmtime = 0;
-        }
-        farmtime++;
-        twoMinutsTimer++;
-        timercount++;
-        Sleep(1000);
+        Sleep(500);
     }
 }
 bool GetPause() 

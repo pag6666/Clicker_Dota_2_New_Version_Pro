@@ -1,6 +1,10 @@
-﻿  main.cpp
-D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(130,16): warning C4804: >: небезопасное использование типа "bool" в операции
-D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(130,41): warning C4390: ";": обнаружен пустой контролируемый оператор; это правильно?
-D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(213,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(260,40): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+﻿  fun.cpp
+  main.cpp
+  Создание кода...
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(130,22): warning C4305: аргумент: усечение из "int" в "bool"
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(134,29): warning C4806: ==: небезопасная операция: значение типа "bool", приведенное к типу "int", не может равняться данной константе
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(139,22): warning C4305: аргумент: усечение из "int" в "bool"
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(150,29): warning C4806: ==: небезопасная операция: значение типа "bool", приведенное к типу "int", не может равняться данной константе
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(255,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\pythone\iop\Clicker_Dota2\Clicker_Dota2\main.cpp(302,40): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   Clicker_Dota2.vcxproj -> D:\pythone\iop\Clicker_Dota2\x64\Debug\Clicker_Dota2.exe

@@ -1,12 +1,11 @@
 #include "lib/source/include/include.h"
 #include "lib/source/include/fun.h"
 #include "lib/source/include/ItemBot.h"
-const int buy_max_item = 6;
+const int buy_max_item = 5;
 std::vector<Bot> bots;
 std::vector<HWND> windows;
 void StartAllThread() 
 {
-	
 	std::thread* t1 = new std::thread(ThreadKeyBoard);
 	std::thread* t2 = new std::thread(ThreadTime);
 }
@@ -38,23 +37,23 @@ PointF(370, 301),
 PointF(395, 316)
 };
 
-PointF cords_lager_dark[] = 
+PointF cords_lager_light[] = 
 { 
-PointF(378,281), PointF(375,287),
-PointF(369,277), PointF(364,284), 
-PointF(361,279), PointF(356,285),
-PointF(360,284), PointF(357,269),
-PointF(368,266), PointF(375,268),
-PointF(384,266), PointF(386,302) 
+PointF(359,293), PointF(365,328),
+PointF(365,313), PointF(380,328), 
+PointF(374,306), PointF(390,328),
+PointF(376,311), PointF(391,324),
+PointF(384,309), PointF(388,317),
+PointF(374,326), PointF(392,311) 
 };
-PointF cords_lager_light[] =
+PointF cords_lager_dark[] =
 {
-PointF(366,313), PointF(365,328),
-PointF(374,305), PointF(373,326),
-PointF(376,311), PointF(381,326),
-PointF(385,309), PointF(389,328),
-PointF(392,311), PointF(392,325),
-PointF(388,317), PointF(359,293)
+PointF(384,266), PointF(356,281),
+PointF(374,269), PointF(365,284),
+PointF(368,267), PointF(369,278),
+PointF(361,265), PointF(375,287),
+PointF(358,268), PointF(379,281),
+PointF(361,279), PointF(385,301)
 };
 /////////////////////////////////////////////////////////////
 //7
@@ -71,23 +70,25 @@ PointF(388,317), PointF(359,293)
 //std::string items4[] = { "HARPOON","CRYSTOLYS","ECHO SABLE","METEOR HAMMER","SHADOW BLADE","SKULL","WIT","DESLATOR","YASHAND KAYA" };
 ////35
 //7
-std::string items0[] = {"OBSERVER WARD","CLARITY","ENCHANTED MANGO","MAGIC WAND","RING OF BASILIUS"};
-std::string items1[] = {"SENTRY WARD", "NULL TALISMAN","SENTRY WARD","BOOTS OF SPEED", "WRAITH BAND","BRACER","HEADD RESS"};
-std::string items2[] = {"SOUL RING","ORB OF CORROSION","BOTTLE","UM OF SHADOWS","BOOTS OF SPEED" };
-std::string items3[] = {"FALCON BLADE","ARCANE BOOTS","PERSEVERANCE","AGHANIM SHARD","PAVISE","POWER TREADS","PHASE BOOTS","DRUM OF ENDURANCE","PHASE BOOTS"};
-std::string items4[] = {"OBLIVION STAFF","AGHANIM SHARD","VEIL OF DISCORD","MASK OF MADNESS","DRAGON LANCE"};
-std::string items5[] = {"CRYSTALYS","SANGE","YASHA","KAYA","BOOTS OF TRAVEL","HELM OF THE DOMINATOR","SKULL BASHER","SHADOW BLADE","DESOLATOR","KAYA AND SANGE","SANGE AND YASHA","YASHA AND KAYA"};
+std::string items0[] = {"QUELLING BLADE","ORB OF VENOM","HEADDRESS","BUCKLER","MAGIC WAND","BRACER","NULL TALISMAN"};
+std::string items1[] = {"RING OF BASILIUS","TRANQUIL BOOTS","PHASE BOOTS","BOOTS OF SPEED","POWER TREADS"};
+std::string items2[] = {"FALCON BLADE","MASK OF MADNESS","MEKANSM","DRUM OF ENDURANCE","URN OF SHADOWS","SOUL RING","VOODOO MASK","MORBID MASK","JAVELIN","BLITZ KNUCKLES","HELM OF IRON WILL"};
+std::string items3[] = { "WITCH BLADE","BLADE MAIL","VLADMIR OFFERING","DRAGON LANCE","FORCE STAFF","VEIL OF DISCORD","CRYSTALYS","ECHO SABRE","SANGE","YASHA","KAYA","DIFFUSAL BLADE","MAELSTROM","GLIMMER CAPE","ARMLET OF MORDIGGIAN" };
+std::string items4[] = { "DESOLATOR", "KAYA AND SANGE", "SANGE AND YASHA", "YASHA AND KAYA", "SHADOW BLADE", "MAGE SLAYER", "METEOR HAMMER", "EULS SCEPTER" };
+
 void OneEterationBot(int index)
 {
-	
+	Sleep(150);
 	if (!IsDeBug()) {
-		std::cout << "dbg___________start_________index windwos = "<<index<<"_______" << std::endl;
+		std::cout << "dbg___________start_________index windwos = "<< index + 1 <<"_______" << std::endl;
 	}
 	//random buy item
-	if (bots[index].GetMyArrayTime(bots[index].GetMyIndexQueue()) == DeltaTime())
+	//22 > 30
+	if (DeltaTime() > bots[index].GetMyArrayTime(bots[index].GetMyIndexQueue()))
 	{
-		bots[index].SetShopItem(bots[index].GetNameItemOfIndex(bots[index].GetMyIndexQueue()));
+		
 		if (bots[index].GetMyIndexQueue() < buy_max_item) {
+			bots[index].SetShopItem(bots[index].GetNameItemOfIndex(bots[index].GetMyIndexQueue()));
 			bots[index].SetMyIndexQueue((bots[index].GetMyIndexQueue() + 1));
 		}
 		if (!IsDeBug()) {
@@ -104,7 +105,7 @@ void OneEterationBot(int index)
 		}
 	}
 		
-	int randomTimeFarm = (Random(45, 60) * Random(1, 3));
+	int randomTimeFarm = (Random(45, 59) * 13);
 	if (!IsDeBug()) 
 	{
 		std::cout << "random farm time = " << randomTimeFarm << std::endl;
@@ -112,7 +113,9 @@ void OneEterationBot(int index)
 	}
 
 	//farm
-	if (TwoMinutsTimer() >= randomTimeFarm && !bots[index].IsFarm())
+
+
+	if (nineMinutsTimer() >= randomTimeFarm && !bots[index].IsFarm())
 	{
 		if (bots[index].GetSf() == 0) {
 			bots[index].SetIsFarm(true);
@@ -124,25 +127,48 @@ void OneEterationBot(int index)
 			{
 				bots[index].SetSavePointFarm(cords_lager_light[Random(0, 12)]);
 			}
-		}
-		else 
-		{
-			if (FarmTime() > bots[index].GetSf());
-			{
-				bots[index].SetSf(0);
-			}
-		}
-	}
-	if (bots[index].IsFarm())
-	{
-		bots[index].SetCord(bots[index].GetSavePointFarm());
-		if (FarmTime() >= Random(14, 17))
-		{
-			bots[index].SetIsFarm(false);
-			bots[index].SetSf(Random(12, 14));
+			bots[index].SetSf(5);
 		}
 		
 	}
+	if (bots[index].GetSf() == 5 && bots[index].IsFarm())
+	{
+		bots[index].SetCord(bots[index].GetSavePointFarm());
+		if (FarmTime() >= Random(24, 27))
+		{
+			bots[index].SetSf(6);
+			if (bots[index].GetMySide() == SideBot::dark)
+			{
+				bots[index].SetSavePointFarm(cords_lager_dark[Random(0, 12)]);
+			}
+			else if (bots[index].GetMySide() == SideBot::light)
+			{
+				bots[index].SetSavePointFarm(cords_lager_light[Random(0, 12)]);
+			}
+		}
+	}
+	if (bots[index].GetSf() == 6 && bots[index].IsFarm())
+	{
+		if (FarmTime() >= Random(24, 27))
+		{
+			bots[index].SetSf(0);
+		}
+		bots[index].SetIsFarm(false);
+	}
+
+	/*if (bots[index].IsFarm())
+	{
+		bots[index].SetCord(bots[index].GetSavePointFarm());
+		if (FarmTime() >= Random(24, 27))
+		{
+			
+			
+		}
+
+	}*/
+
+	//end farm
+	
 	if (TwoMinutsTimer() >= (60)*Random(0,3))
 	{
 		KeyDown(VK_CONTROL);
@@ -161,6 +187,22 @@ void OneEterationBot(int index)
 			InputKey('R');
 		}
 		KeyUp(VK_CONTROL);
+		for (int i = 0; i < 2; i++) {
+			int random_down = Random(0, 4);
+			if (random_down == 0) {
+				InputKey('Q');
+			}
+			else if (random_down == 1) {
+				InputKey('W');
+			}
+			else if (random_down == 2) {
+				InputKey('E');
+			}
+			else if (random_down == 3)
+			{
+				InputKey('R');
+			}
+		}
 	}
 	if ((TwoMinutsTimer()/2) >= (30) * Random(0, 2))
 	{
@@ -270,12 +312,12 @@ int main()
 		for (int i = 0; i < windows.size(); i++)
 		{		
 			int* randomBuyTime = new int [buy_max_item];
-			randomBuyTime[0] = (Random(1,50) * Random(1,5));
-			randomBuyTime[1] = (Random(20, 60) * Random(5, 11));
-			randomBuyTime[2] = (Random(40, 60) * Random(11, 16));
-			randomBuyTime[3] = (Random(50, 60) * Random(16, 25));
-			randomBuyTime[4] = (Random(45, 60) * Random(25, 29));
-			randomBuyTime[5] = (Random(50, 60) * Random(30, 36));
+			randomBuyTime[0] = (Random(3, 28) * Random(1, 1));
+			randomBuyTime[1] = (Random(45, 60) * Random(7, 9));
+			randomBuyTime[2] = (Random(43, 60) * Random(14, 16));
+			randomBuyTime[3] = (Random(56, 60) * Random(25, 27));
+			randomBuyTime[4] = (Random(23, 60) * Random(34, 36));
+			randomBuyTime[5] = (Random(35, 60) * Random(40, 42));
 			//std::string* nameItems = new std::string[buy_max_item];
 			////500
 			//nameItems[0] = "a";
@@ -283,26 +325,25 @@ int main()
 			//nameItems[2] = "c";
 			//nameItems[3] = "v";
 			//nameItems[4] = "g";
+			int random_item_time0 = Random(0, (sizeof(items0) / sizeof(std::string)));
+			int random_item_time1 = Random(0, (sizeof(items1) / sizeof(std::string)));
+			int random_item_time2 = Random(0, (sizeof(items2) / sizeof(std::string)));
+			int random_item_time3 = Random(0, (sizeof(items3) / sizeof(std::string)));
+			int random_item_time4 = Random(0, (sizeof(items4) / sizeof(std::string)));
 			
-			int random_item_time0	=	Random(0, (sizeof(items0) / sizeof(std::string)));
-			int random_item_time1	=	Random(0, (sizeof(items1) / sizeof(std::string)));
-			int random_item_time2	=	Random(0, (sizeof(items2) / sizeof(std::string)));
-			int random_item_time3	=	Random(0, (sizeof(items3) / sizeof(std::string)));
-			int random_item_time4	=	Random(0, (sizeof(items4) / sizeof(std::string)));
-			int random_item_time5	=	Random(0, (sizeof(items5) / sizeof(std::string)));
+			//std::cout << "random select item windwos = " << i <<" ri0 = "<<random_item_time0<< std::endl;
 			int set_index_0 = random_item_time0;
 			int set_index_1 = random_item_time1;
 			int set_index_2 = random_item_time2;
 			int set_index_3 = random_item_time3;
 			int set_index_4 = random_item_time4;
-			int set_index_5 = random_item_time5;
-			std::string* iteam = new std::string[buy_max_item]{ 
+			std::string* iteam = new std::string[buy_max_item]{
 				items0[set_index_0],
 				items1[set_index_1],
 				items2[set_index_2],
 				items3[set_index_3],
 				items4[set_index_4],
-				items5[set_index_5]};
+			};
 				
 				
 				if (side == SideBot::dark) {
@@ -454,8 +495,16 @@ int main()
 						if (!GetPause()) {
 							OneEterationBot(i);
 						}
+						else 
+						{
+							Sleep(500);
+						}
 					}
 				}
+			}
+			else
+			{
+				Sleep(500);
 			}
 		}
 	}

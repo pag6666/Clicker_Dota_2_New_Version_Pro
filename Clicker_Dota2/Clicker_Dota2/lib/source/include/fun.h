@@ -22,5 +22,6 @@ int DeltaTime();
 int TwoMinutsTimer();
 bool IsDeBug();
 int FarmTime();
+int nineMinutsTimer();
 
 
